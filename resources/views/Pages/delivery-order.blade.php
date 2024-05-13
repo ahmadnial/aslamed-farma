@@ -1,4 +1,4 @@
-@extends('pages.master')
+@extends('Pages.master')
 
 @section('mytitle', 'Penerimaan Barang')
 
@@ -82,8 +82,8 @@
         }
 
         /* th {
-                                                                                                    min-width: 180px;
-                                                                                                } */
+                                                                                                        min-width: 180px;
+                                                                                                    } */
 
         .modal-footer {
             position: sticky;
