@@ -746,14 +746,14 @@
             });
         });
 
-        // $('#penjualanX').DataTable({
-        //     dom: 'Bfrtip',
-        //     buttons: [
-        //         'colvis',
-        //         'excel',
-        //         'print'
-        //     ]
-        // });
+        $('#penjualanX').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'colvis',
+                'excel',
+                'print'
+            ]
+        });
 
         function menuToggle() {
             const toggleMenu = document.querySelector(".menu");
