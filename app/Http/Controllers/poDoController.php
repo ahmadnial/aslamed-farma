@@ -144,7 +144,7 @@ class poDoController extends Controller
         //     ->get();
         $dateNow = Carbon::now()->format("Y-m-d");
 
-        return view('pages.adjusment', [
+        return view('Pages.adjusment', [
             'ListObat' => $ListObat,
             // 'noReff'    => $noRef,
             // 'isListAdj'    => $isListAdj,
