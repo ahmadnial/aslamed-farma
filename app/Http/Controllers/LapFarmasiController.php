@@ -20,14 +20,14 @@ class LapFarmasiController extends Controller
     public function lapPenjualanFarmasiRekap()
     {
         $isUser = DB::table('users')->get();
-        return view('pages.laporan.farmasi.laporan-penjualan-rekap', ['isUser' => $isUser]);
+        return view('Pages.laporan.farmasi.laporan-penjualan-rekap', ['isUser' => $isUser]);
     }
 
     public function lapPenjualanFarmasiDetail()
     {
         $isUser = DB::table('users')->get();
 
-        return view('pages.laporan.farmasi.laporan-penjualan-farmasi-detail', ['isUser' => $isUser]);
+        return view('Pages.laporan.farmasi.laporan-penjualan-farmasi-detail', ['isUser' => $isUser]);
     }
 
 
@@ -74,7 +74,7 @@ class LapFarmasiController extends Controller
 
     public function bukuStok()
     {
-        return view('pages.laporan.farmasi.buku-stok');
+        return view('Pages.laporan.farmasi.buku-stok');
     }
 
     public function getBukuStok(Request $request)
@@ -95,7 +95,7 @@ class LapFarmasiController extends Controller
     {
         $isMstrMedis =  mstr_dokter::all();
 
-        return view('pages.laporan.registrasi.laporan-registrasi-masuk', ['isMstrMedis' => $isMstrMedis]);
+        return view('Pages.laporan.registrasi.laporan-registrasi-masuk', ['isMstrMedis' => $isMstrMedis]);
     }
 
     public function getLapRegMasuk(Request $request)
@@ -144,7 +144,7 @@ class LapFarmasiController extends Controller
     // LAPORAN PENDAPATAN KLINIK
     public function lapKlinikRekap()
     {
-        return view('pages.laporan.klinik.pendapatan-klinik-rekap');
+        return view('Pages.laporan.klinik.pendapatan-klinik-rekap');
     }
 
     public function getLapPendapatanKlinik(Request $request)
@@ -167,7 +167,7 @@ class LapFarmasiController extends Controller
 
     function pembelianDetail()
     {
-        return view('pages.laporan.farmasi.pembelian-detail');
+        return view('Pages.laporan.farmasi.pembelian-detail');
     }
 
     function getPembelianDetail(Request $request)
@@ -185,7 +185,7 @@ class LapFarmasiController extends Controller
     {
         $isMstrMedis =  mstr_dokter::all();
         $isMstrTdk =  mstr_tindakan::all();
-        return view('pages.laporan.klinik.info-tindakan', [
+        return view('Pages.laporan.klinik.info-tindakan', [
             'isMstrMedis' => $isMstrMedis,
             'isMstrTdk' => $isMstrTdk
         ]);
@@ -243,7 +243,7 @@ class LapFarmasiController extends Controller
 
     public function karatuStok()
     {
-        return view('pages.laporan.farmasi.kartu-stok');
+        return view('Pages.laporan.farmasi.kartu-stok');
     }
 
     public function itemObatSearch(Request $request)

@@ -20,7 +20,7 @@ class masterFarmasiController extends Controller
     public function katProd()
     {
         $katprod = mstr_kategori_produk::all();
-        return view('pages.mstr2.mstr-kategori-produk', ['katprod' => $katprod]);
+        return view('Pages.mstr2.mstr-kategori-produk', ['katprod' => $katprod]);
     }
 
     public function katProdCreate(Request $request)
@@ -41,7 +41,7 @@ class masterFarmasiController extends Controller
     {
         $satuan = mstr_satuan::all();
 
-        return view('pages.mstr2.mstr-satuan', ['satuan' => $satuan]);
+        return view('Pages.mstr2.mstr-satuan', ['satuan' => $satuan]);
     }
 
     public function satuanCreate(Request $request)
@@ -75,7 +75,7 @@ class masterFarmasiController extends Controller
     {
         $lokstock = mstr_lokasi_stock::all();
 
-        return view('pages.mstr2.mstr-lokasi-stock', ['lokstock' => $lokstock]);
+        return view('Pages.mstr2.mstr-lokasi-stock', ['lokstock' => $lokstock]);
     }
 
     public function lokstockCreate(Request $request)
@@ -109,7 +109,7 @@ class masterFarmasiController extends Controller
     {
         $jenbat = mstr_jenis_obat::all();
 
-        return view('pages.mstr2.mstr-jenis-obat', ['jenbat' => $jenbat]);
+        return view('Pages.mstr2.mstr-jenis-obat', ['jenbat' => $jenbat]);
     }
 
     public function jenbatCreate(Request $request)
@@ -154,7 +154,7 @@ class masterFarmasiController extends Controller
 
         $supplier = mstr_supplier::all();
 
-        return view('pages.mstr2.mstr-supplier', ['supplier' => $supplier, 'kd_supplier' => $kd_supplier]);
+        return view('Pages.mstr2.mstr-supplier', ['supplier' => $supplier, 'kd_supplier' => $kd_supplier]);
     }
 
     public function supplierCreate(Request $request)
@@ -208,7 +208,7 @@ class masterFarmasiController extends Controller
         $golongan = mstr_jenis_obat::all();
         $obatview = mstr_obat::all();
 
-        return view('pages.mstr2.mstr-obat', [
+        return view('Pages.mstr2.mstr-obat', [
             'supplier' => $supplier,
             'kategori' => $kategori,
             'kd_obat' => $kd_obat,
