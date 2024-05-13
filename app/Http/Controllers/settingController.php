@@ -15,7 +15,7 @@ class settingController extends Controller
     {
         $isDataUser = DB::table('users')->leftJoin('role', 'users.role_id', 'role.id')->get();
 
-        return view('pages.hak-akses', ['isDataUser' => $isDataUser]);
+        return view('Pages.hak-akses', ['isDataUser' => $isDataUser]);
     }
 
     public function userCreate(Request $request)
