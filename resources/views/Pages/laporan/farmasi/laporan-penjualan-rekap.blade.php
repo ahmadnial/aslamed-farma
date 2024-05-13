@@ -1,4 +1,4 @@
-@extends('pages.master')
+@extends('Pages.master')
 @section('mytitle', 'Laporan Apotek')
 
 @section('konten')
