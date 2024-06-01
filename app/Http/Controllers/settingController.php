@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\profilePerusahaan;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -33,6 +34,25 @@ class settingController extends Controller
 
         if ($user->save()) {
             toastr()->success('Create User Berhasil!');
+            return back();
+        } else {
+            toastr()->error('Gagal Tersimpan!');
+            return back();
+        }
+    }
+
+    public function profilePerusahaan()
+    {
+        $profil = profilePerusahaan::all();
+        return view('Pages.profile-perusahaan', ['profil' => $profil]);
+    }
+
+    public function createProfile(Request $request)
+    {
+        $createProfile = profilePerusahaan::create($request->all());
+
+        if ($createProfile->save()) {
+            toastr()->success('Tersimpan!');
             return back();
         } else {
             toastr()->error('Gagal Tersimpan!');

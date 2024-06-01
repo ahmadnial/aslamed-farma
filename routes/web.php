@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\analisaController;
 use App\Http\Controllers\arsipController;
 use App\Http\Controllers\AssesmentController;
 use Illuminate\Support\Facades\Route;
@@ -277,6 +278,12 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('pricelistHrgNakes', [LapFarmasiController::class, 'pricelistHrgNakes'])->name('pricelistHrgNakes');
 });
 
+//Laporan Analisa
+Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
+    Route::get('produk-terlaris', [analisaController::class, 'laporanProdukTerlaris'])->name('produk-terlaris');
+    Route::get('getLaporanProdukTerlaris', [analisaController::class, 'getLaporanProdukTerlaris'])->name('getLaporanProdukTerlaris');
+});
+
 //Accounting / KEU
 Route::group(['middleware' => ['auth', 'checkrole:1,4,6']], function () {
     Route::get('pelunasan-hutang', [HutangSupplierController::class, 'pelunasanHutang'])->name('pelunasan-hutang');
@@ -294,4 +301,6 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4,6']], function () {
 Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
     Route::get('hak-akses', [settingController::class, 'hakAkses'])->name('hak-akses');
     Route::post('userCreate', [settingController::class, 'userCreate'])->name('userCreate');
+    Route::get('profile-perusahaan', [settingController::class, 'profilePerusahaan'])->name('profile-perusahaan');
+    Route::post('createProfile', [settingController::class, 'createProfile'])->name('createProfile');
 });

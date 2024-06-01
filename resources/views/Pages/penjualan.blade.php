@@ -1,4 +1,4 @@
-@extends('Pages.master')
+@extends('pages.master')
 
 @section('mytitle', 'Penjualan')
 @section('konten')
@@ -11,34 +11,34 @@
             </div>
 
             <div class="card-body">
-                {{-- <div id=""> --}}
-                <div class="mb-3">
-                    {{-- <select name="" id="" class="form-control form-control-sm col-2">
+                <div id="">
+                    <div class="mb-3">
+                        {{-- <select name="" id="" class="form-control form-control-sm col-2">
                             <option value=""></option>
                         </select> --}}
-                    <input type="month" name="monthSales" id="monthSales" onchange="getMonthSale()"
-                        class="form-control form-control-sm col-2">
-                </div>
-                <table id="example1" class="table table-hover">
-                    <thead class="" style="background-color:rgb(242, 231, 255)">
-                        <tr>
-                            {{-- <th>Tanggal</th> --}}
-                            <th>Tanggal Transaksi</th>
-                            <th>No Transaksi</th>
-                            <th>Layanan Penjualan</th>
-                            <th>No.RM</th>
-                            <th>Nama Pasien</th>
-                            <th>Tipe Tarif</th>
-                            <th>Total Penjualan</th>
-                            <th>Act</th>
-                            {{-- <th></th> --}}
-                        </tr>
-                    </thead>
-                    <tbody>
+                        <input type="month" name="monthSales" id="monthSales" onchange="getMonthSale()"
+                            class="form-control form-control-sm col-2">
+                    </div>
+                    <table id="example1" class="table table-hover">
+                        <thead class="" style="background-color:rgb(242, 231, 255)">
+                            <tr>
+                                {{-- <th>Tanggal</th> --}}
+                                <th>Tanggal Transaksi</th>
+                                <th>No Transaksi</th>
+                                <th>Layanan Penjualan</th>
+                                <th>No.RM</th>
+                                <th>Nama Pasien</th>
+                                <th>Tipe Tarif</th>
+                                <th>Total Penjualan</th>
+                                <th>Act</th>
+                                {{-- <th></th> --}}
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                    </tbody>
-                </table>
-                {{-- </div> --}}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </section>
@@ -824,11 +824,11 @@
                         `
                              <div class="col-sm-2">
                                     <input type="text" class="form-control" name="resep_dari"
-                                        id="resep_dari" value="" readonly placeholder="Resep Dari">
+                                        id="resep_dari" value="" placeholder="Resep Dari">
                                 </div>
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control" name="no_resep"
-                                        id="no_resep" value="" readonly placeholder="No.Resep">
+                                        id="no_resep" value="" placeholder="No.Resep">
                                 </div>
                             `
                     )

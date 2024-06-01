@@ -152,7 +152,11 @@
                     </div>
                     <div class="info"
                         style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-size: 19px">
-                        <b class="text-danger"><i class="fa fa-hospital"></i> APOTEK ASLA</b>
+                        <b class="text-danger"><i class="fa fa-hospital"></i>
+                            <?php
+                            $tmp = \App\models\profilePerusahaan::select('nmPerusahaan')->value('nmPerusahaan');
+                            ?>
+                            {{ $tmp }} </b>
                     </div>
                 </div>
 
@@ -194,8 +198,17 @@
                                         <p>Data Sosial</p>
                                     </a>
                                 </li>
-                                
                             </ul>
+                        </li> --}}
+                        {{-- @if (auth()->user()->role_id == '2' || '1') --}}
+                        {{-- <li class="nav-item">
+                            <a href="{{ url('antrian') }}" class="nav-link">
+                                <i class="nav-icon far fa-calendar-alt"></i>
+                                <p>
+                                    Antrian
+                                    <span class="badge badge-info right">2</span>
+                                </p>
+                            </a>
                         </li> --}}
 
                         {{-- <li class="nav-item">
@@ -227,13 +240,15 @@
                                 </p>
                             </a>
                         </li> --}}
+                        {{-- @endif --}}
 
+                        {{-- @if (auth()->user()->role_id == '4' || '1') --}}
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 {{-- <i class="nav-icon fas fa-bed"></i> --}}
                                 <i class="nav-icon fa fa-light fa-pills"></i>
                                 <p>
-                                    Apotek
+                                    Farmasi
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -302,7 +317,6 @@
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                {{-- <i class="nav-icon fas fa-bed"></i> --}}
                                 <i class="nav-icon fa fa-donate"></i>
                                 <p>
                                     Accounting
@@ -383,7 +397,7 @@
                                         <p>Penjualan Apotek Detail</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a href="{{ url('/laporan-registrasi-masuk') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Registrasi Masuk</p>
@@ -400,7 +414,7 @@
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Info Tindakan</p>
                                     </a>
-                                </li>
+                                </li> --}}
                                 {{-- <li class="nav-item">
                                     <a href="{{ url('/delivery-order') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
@@ -413,6 +427,25 @@
                                         <p>Adjusment Stock</p>
                                     </a>
                                 </li> --}}
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                {{-- <i class="nav-icon fas fa-bed"></i> --}}
+                                <i class="nav-icon fas fa-star"></i>
+                                <p>
+                                    Analisa
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/produk-terlaris') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Produk Terlaris</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 
@@ -544,6 +577,12 @@
                                             <p>Pricelist Barang</p>
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('/profile-perusahaan') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Profile</p>
+                                        </a>
+                                    </li>
                                     {{-- <li class="nav-item">
                                     <a href="{{ url('/mstr-medis') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
@@ -641,7 +680,7 @@
     <!-- Sparkline -->
     <script src="{{ asset('src/plugins/sparklines/sparkline.js') }}"></script>
     <script src="{{ asset('src/asset/uploadimg.js') }}"></script>
-
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     {{-- <script src="{{ asset('src/plugins/jqvmap/jquery.vmap.min.js') }}"></script> --}}
     {{-- <script src="{{ asset('src/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script> --}}
     <!-- jQuery Knob Chart -->
@@ -651,7 +690,11 @@
     <script src="{{ asset('src/plugins/daterangepicker/daterangepicker.js') }}"></script>
     <!-- Tempusdominus Bootstrap 4 -->
     {{-- <script src="{{ asset('src/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script> --}}
-
+    <script src="{{ asset('src/plugins/flot/jquery.flot.js') }}"></script>
+    <!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+    <script src="{{ asset('src/plugins/flot/plugins/jquery.flot.resize.js') }}"></script>
+    <!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+    <script src="{{ asset('src/plugins/flot/plugins/jquery.flot.pie.js') }}"></script>
     <script src="{{ asset('src/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('src/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <script src="{{ asset('src/dist/js/adminlte.js') }}"></script>
@@ -723,7 +766,7 @@
                 "paging": true,
                 "searching": true,
                 "lengthChange": true,
-                "autoWidth": true,
+                "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             $('#penjualan').DataTable({
@@ -746,14 +789,14 @@
             });
         });
 
-        $('#penjualanX').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'colvis',
-                'excel',
-                'print'
-            ]
-        });
+        // $('#penjualanX').DataTable({
+        //     dom: 'Bfrtip',
+        //     buttons: [
+        //         'colvis',
+        //         'excel',
+        //         'print'
+        //     ]
+        // });
 
         function menuToggle() {
             const toggleMenu = document.querySelector(".menu");

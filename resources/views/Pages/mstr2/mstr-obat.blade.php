@@ -1,4 +1,4 @@
-@extends('Pages.master')
+@extends('pages.master')
 
 @section('konten')
     <section class="content">
@@ -25,6 +25,7 @@
                             <th>Hrg Jual Non-resep</th>
                             <th>Hrg Jual Resep</th>
                             <th>Hrg Jual Nakes</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -44,6 +45,13 @@
                                 <td id="">{{ $tz->fm_hrg_jual_resep }}</td>
                                 {{-- <td id="">@currency($tz->fm_hrg_jual_resep)</td> --}}
                                 <td id="">@currency($tz->fm_hrg_jual_nakes)</td>
+                                <td id="">
+                                    @if ($tz->isActive == '1')
+                                        <span class="badge badge-success">Active</span>
+                                    @else
+                                        <span class="badge badge-primary">Non-Active</span>
+                                    @endif
+                                </td>
                                 <td><button class="btn btn-xs btn-info" data-toggle="modal" data-target=""
                                         data-id="{{ $tz->fm_kd_obat }}" data-nmobat="{{ $tz->fm_nm_obat }}"
                                         data-kategori="{{ $tz->fm_kategori }}" data-supplier="{{ $tz->fm_supplier }}"
@@ -60,13 +68,14 @@
                                         data-hrg_jual_nakes="{{ $tz->fm_hrg_jual_nakes }}"
                                         data-hrg_jual_reg_persen="{{ $tz->fm_hrg_jual_non_resep_persen }}"
                                         data-hrg_jual_resep_persen="{{ $tz->fm_hrg_jual_resep_persen }}"
+                                        data-isactive="{{ $tz->isActive }}"
                                         data-hrg_jual_nakes_persen="{{ $tz->fm_hrg_jual_nakes_persen }}" id="editObat"
-                                        onClick="getIDObat(this)"><i class="fa fa-edit"></i>Edit</button>
+                                        onClick="getIDObat(this)"><i class="fa fa-edit"></i></button>
                                     {{-- <button class="btn btn-xs btn-danger" data-toggle="modal"
                                         data-target="#DeleteSupplier{{ $tz->fm_kd_supplier }}">Hapus</button> --}}
-                                    <button class="btn btn-danger btn-xs" data-id="{{ $tz->fm_kd_obat }}"
+                                    {{-- <button class="btn btn-danger btn-xs" data-id="{{ $tz->fm_kd_obat }}"
                                         data-nmobat="{{ $tz->fm_nm_obat }}" onClick="delObat(this)"><i
-                                            class="fa fa-trash"></i>Delete</button>
+                                            class="fa fa-trash"></i>Delete</button> --}}
                                 </td>
                             </tr>
                         @endforeach
@@ -253,8 +262,8 @@
                         <div class="">
                             <div class="custom-control custom-checkbox col-md ml-3">
                                 <input class="custom-control-input custom-control-input-danger" type="checkbox"
-                                    id="eisActive" name="eisActive" value="1">
-                                <label for="isActive" class="custom-control-label">Aktif</label>
+                                    id="eisActive" name="eisActive">
+                                <label for="eisActive" class="custom-control-label">Aktif</label>
                             </div>
                             <div class="custom-control custom-checkbox col-md ml-3">
                                 <input class="custom-control-input custom-control-input-danger" type="checkbox"
@@ -431,7 +440,7 @@
                             <div class="custom-control custom-checkbox col-md ml-3">
                                 {{-- <input type="hidden" value="0" id="isActive[0]" name="isActive[0]"> --}}
                                 <input class="custom-control-input custom-control-input-danger" type="checkbox"
-                                    id="isActive" name="isActive" value="1">
+                                    id="isActive" name="isActive">
                                 <label for="isActive" class="custom-control-label">Aktif</label>
                             </div>
                             <div class="custom-control custom-checkbox col-md ml-3">
@@ -833,6 +842,11 @@
                 var hrgJualReg = $(tx).data('hrg_jual_reg');
                 var hrgJualResep = $(tx).data('hrg_jual_resep');
                 var hrgJualNakes = $(tx).data('hrg_jual_nakes');
+                var isActive = $(tx).data('isactive');
+
+                if (isActive == 1) {
+                    $('#eisActive').attr("checked", "checked");
+                }
 
                 var hrgJualRegPersen = $(tx).data('hrg_jual_reg_persen');
                 var hrgJualResepPersen = $(tx).data('hrg_jual_resep_persen');
@@ -1017,8 +1031,18 @@
                     var fm_hrg_jual_non_resep_persen = $('#fm_hrg_jual_non_resep_persen').val();
                     var fm_hrg_jual_resep_persen = $('#fm_hrg_jual_resep_persen').val();
                     var fm_hrg_jual_nakes_persen = $('#fm_hrg_jual_nakes_persen').val();
-                    var isActive = $('#isActive').val();
-                    var isOpenPrice = $('#isOpenPrice').val();
+                    if (document.getElementById('isActive').checked) {
+                        var isActive = 1;
+                    } else {
+                        var isActive = 0;
+                    }
+
+                    if (document.getElementById('isOpenPrice').checked) {
+                        var isOpenPrice = 1;
+                    } else {
+                        var isOpenPrice = 0;
+                    }
+
                     var user = $('#user').val();
 
                     // ubah currency ke int
@@ -1109,7 +1133,11 @@
                     var efm_hrg_jual_non_resep_persen = $('#efm_hrg_jual_non_resep_persen').val();
                     var efm_hrg_jual_resep_persen = $('#efm_hrg_jual_resep_persen').val();
                     var efm_hrg_jual_nakes_persen = $('#efm_hrg_jual_nakes_persen').val();
-                    var eisActive = $('#eisActive').val();
+                    if (document.getElementById('eisActive').checked) {
+                        var eisActive = '1';
+                    } else {
+                        var eisActive = '0';
+                    }
                     var eisOpenPrice = $('#eisOpenPrice').val();
                     // var euser = $('#euser').val();
 

@@ -39,7 +39,7 @@ class poDoController extends Controller
 
         $supplier = mstr_supplier::all();
         $lokasi = mstr_lokasi_stock::all();
-        return view('Pages.purchase-order', ['supplier' => $supplier, 'lokasi' => $lokasi]);
+        return view('pages.purchase-order', ['supplier' => $supplier, 'lokasi' => $lokasi]);
     }
 
     public function do()
@@ -85,7 +85,7 @@ class poDoController extends Controller
         //     ->leftJoin('do_detail_item', 'do_hdr.do_hdr_kd', 'do_detail_item.do_hdr_kd')
         //     ->get();
 
-        return view('Pages.delivery-order', [
+        return view('pages.delivery-order', [
             'supplier' => $supplier,
             'lokasi' => $lokasi,
             'viewDO' => $viewDO,
@@ -144,7 +144,7 @@ class poDoController extends Controller
         //     ->get();
         $dateNow = Carbon::now()->format("Y-m-d");
 
-        return view('Pages.adjusment', [
+        return view('pages.adjusment', [
             'ListObat' => $ListObat,
             // 'noReff'    => $noRef,
             // 'isListAdj'    => $isListAdj,

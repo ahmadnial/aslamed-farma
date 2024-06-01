@@ -1,4 +1,4 @@
-@extends('Pages.master')
+@extends('pages.master')
 @section('mytitle', 'Kartu Stok')
 @section('konten')
     <section class="content">

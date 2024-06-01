@@ -1,11 +1,11 @@
 @extends('pages.master')
-@section('mytitle', 'Laporan Apotek')
+@section('mytitle', 'Produk Terlaris')
 
 @section('konten')
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"><i class="fa fa-truck">&nbsp;</i>Laporan Penjualan Apotek Rekap</h3>
+                <h3 class="card-title"><i class="fa fa-book">&nbsp;</i>Penjualan Produk Terlaris</h3>
             </div>
 
             <div class="card-body">
@@ -14,7 +14,7 @@
                     <div class="input-group-addon">&nbsp; s.d&nbsp;</div>
                     <input type="date" id="date2" class="form-control">
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
-                    <select id="user" class="form-control">
+                    <select id="user" class="form-control" disabled>
                         <option value="">Select User</option>
                         @foreach ($isUser as $iu)
                             <option value="{{ $iu->name }}">{{ $iu->name }}</option>
@@ -22,7 +22,7 @@
                     </select>
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
-                    <select id="tipeTarif" class="form-control">
+                    <select id="tipeTarif" class="form-control" disabled>
                         <option value="">Tipe Tarif</option>
                         <option value="Reguler">Reguler</option>
                         <option value="Resep">Resep</option>
@@ -41,12 +41,10 @@
                     <table id="penjualan" class="table table-hover table-striped">
                         <thead class="bg-nial">
                             <tr>
-                                {{-- <th>kode Transaksi</th> --}}
-                                {{-- <th>Tanggal Transaksi</th> --}}
                                 <th>Kode Barang</th>
                                 <th>Nama Barang</th>
+                                <th>Satuan Jual</th>
                                 <th>QTY</th>
-                                <th>Satuan</th>
                                 <th>Harga Satuan(HNA)</th>
                                 <th>Harga Satuan(Jual)</th>
                                 <th>Sub ttl HNA</th>
@@ -99,7 +97,7 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        url: "{{ url('getLaporanPenjualanRekap') }}",
+                        url: "{{ url('getLaporanProdukTerlaris') }}",
                         type: 'GET',
                         data: {
                             date1: date1,
@@ -116,6 +114,7 @@
                             var rows = table
                                 .rows()
                                 .remove()
+                                .order(3, 'dsc')
                                 .draw();
                             $.each(isDataLaporanDetail, function(key, datavalue) {
                                 const table = $('#penjualan').DataTable();
@@ -150,7 +149,7 @@
 
                                 const dataBaru = [
                                     [datavalue.kd_obat,
-                                        datavalue.nm_obat, datavalue.total, datavalue.satuan,
+                                        datavalue.nm_obat, datavalue.satuan, datavalue.total,
                                         hrg_obatHnaShow,
                                         hrg_obatShow, hna, subtotal
                                     ],

@@ -33,7 +33,7 @@ class mastersatuController extends Controller
 
         $isview = mstr_layanan::all();
 
-        return view('Pages.mstr1.mstr-layanan', ['kd_layanan' => $kd_layanan], ['isview' => $isview]);
+        return view('pages.mstr1.mstr-layanan', ['kd_layanan' => $kd_layanan], ['isview' => $isview]);
     }
 
     public function layananCreate(Request $request)
@@ -68,7 +68,7 @@ class mastersatuController extends Controller
         $isview = mstr_dokter::all();
         $isviewlayanan = mstr_layanan::all();
 
-        return view('Pages.mstr1.mstr-medis', ['isview' => $isview], ['islayanan' => $isviewlayanan]);
+        return view('pages.mstr1.mstr-medis', ['isview' => $isview], ['islayanan' => $isviewlayanan]);
     }
 
 
@@ -98,7 +98,7 @@ class mastersatuController extends Controller
     {
         $isjaminan = mstr_jaminan::all();
 
-        return view('Pages.mstr1.mstr-jaminan', ['isjaminan' => $isjaminan]);
+        return view('pages.mstr1.mstr-jaminan', ['isjaminan' => $isjaminan]);
     }
 
     public function jaminanCreate(Request $request)
@@ -123,7 +123,7 @@ class mastersatuController extends Controller
     {
         $istindakan = mstr_tindakan::all();
 
-        return view('Pages.mstr1.mstr-tindakan', ['istindakan' => $istindakan]);
+        return view('pages.mstr1.mstr-tindakan', ['istindakan' => $istindakan]);
     }
 
     public function tindakanCreate(Request $request)
@@ -153,7 +153,7 @@ class mastersatuController extends Controller
         // dd($isnilaitindakan);
         $istindakan = mstr_tindakan::all();
 
-        return view('Pages.mstr1.mstr-nilai-tindakan', ['isnilaitindakan' => $isnilaitindakan, 'istindakan' => $istindakan]);
+        return view('pages.mstr1.mstr-nilai-tindakan', ['isnilaitindakan' => $isnilaitindakan, 'istindakan' => $istindakan]);
     }
 
     public function nilaiTindakanCreate(Request $request)
@@ -188,7 +188,7 @@ class mastersatuController extends Controller
             $kdTo = 'TO' . str_pad(($de + 1), 3, '0', STR_PAD_LEFT);
         }
         $getAllTemplate = DB::table('t_template_order_hdr')->get();
-        return view('Pages.mstr1.template-resep', [
+        return view('pages.mstr1.template-resep', [
             'kdTo' => $kdTo,
             'getAllTemplate' => $getAllTemplate
         ]);

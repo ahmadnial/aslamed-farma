@@ -20,7 +20,7 @@ class masterFarmasiController extends Controller
     public function katProd()
     {
         $katprod = mstr_kategori_produk::all();
-        return view('Pages.mstr2.mstr-kategori-produk', ['katprod' => $katprod]);
+        return view('pages.mstr2.mstr-kategori-produk', ['katprod' => $katprod]);
     }
 
     public function katProdCreate(Request $request)
@@ -41,7 +41,7 @@ class masterFarmasiController extends Controller
     {
         $satuan = mstr_satuan::all();
 
-        return view('Pages.mstr2.mstr-satuan', ['satuan' => $satuan]);
+        return view('pages.mstr2.mstr-satuan', ['satuan' => $satuan]);
     }
 
     public function satuanCreate(Request $request)
@@ -75,7 +75,7 @@ class masterFarmasiController extends Controller
     {
         $lokstock = mstr_lokasi_stock::all();
 
-        return view('Pages.mstr2.mstr-lokasi-stock', ['lokstock' => $lokstock]);
+        return view('pages.mstr2.mstr-lokasi-stock', ['lokstock' => $lokstock]);
     }
 
     public function lokstockCreate(Request $request)
@@ -109,7 +109,7 @@ class masterFarmasiController extends Controller
     {
         $jenbat = mstr_jenis_obat::all();
 
-        return view('Pages.mstr2.mstr-jenis-obat', ['jenbat' => $jenbat]);
+        return view('pages.mstr2.mstr-jenis-obat', ['jenbat' => $jenbat]);
     }
 
     public function jenbatCreate(Request $request)
@@ -154,7 +154,7 @@ class masterFarmasiController extends Controller
 
         $supplier = mstr_supplier::all();
 
-        return view('Pages.mstr2.mstr-supplier', ['supplier' => $supplier, 'kd_supplier' => $kd_supplier]);
+        return view('pages.mstr2.mstr-supplier', ['supplier' => $supplier, 'kd_supplier' => $kd_supplier]);
     }
 
     public function supplierCreate(Request $request)
@@ -208,7 +208,7 @@ class masterFarmasiController extends Controller
         $golongan = mstr_jenis_obat::all();
         $obatview = mstr_obat::all();
 
-        return view('Pages.mstr2.mstr-obat', [
+        return view('pages.mstr2.mstr-obat', [
             'supplier' => $supplier,
             'kategori' => $kategori,
             'kd_obat' => $kd_obat,
@@ -297,38 +297,52 @@ class masterFarmasiController extends Controller
         //     'st_hrg_beli_per1'  => 'required',
         //     'st_hrg_beli_per2'  => 'required',
         // ]);
+        DB::beginTransaction();
+        try {
 
-        DB::table('mstr_obat')->where('fm_kd_obat', $request->fm_kd_obat)->update([
-            // 'fm_kd_obat' => $request->efm_kd_obat,
-            'fm_nm_obat' => $request->fm_nm_obat,
-            'fm_kategori' => $request->fm_kategori,
-            'fm_supplier' => $request->fm_supplier,
-            'fm_golongan_obat' => $request->fm_golongan_obat,
-            'fm_satuan_pembelian' => $request->fm_satuan_pembelian,
-            'fm_isi_satuan_pembelian' => $request->fm_isi_satuan_pembelian,
-            'fm_hrg_beli' => $request->fm_hrg_beli,
-            'fm_hrg_beli_detail' => $request->fm_hrg_beli_detail,
-            'fm_satuan_jual' => $request->fm_satuan_jual,
-            'fm_hrg_jual_non_resep' => $request->fm_hrg_jual_non_resep,
-            'fm_hrg_jual_resep' => $request->fm_hrg_jual_resep,
-            'fm_hrg_jual_nakes' => $request->fm_hrg_jual_nakes,
-            'isActive' => $request->isActive,
-            'isOpenPrice' => $request->isOpenPrice,
-            'user' => Auth::user()->name,
-            'st_isi_pembelian'  => $request->st_isi_pembelian,
-            'st_hrg_beli_per1'  => $request->st_hrg_beli_per1,
-            'st_hrg_beli_per2'  => $request->st_hrg_beli_per2,
-            'fm_hrg_jual_non_resep_persen' => $request->fm_hrg_jual_non_resep_persen,
-            'fm_hrg_jual_resep_persen' => $request->fm_hrg_jual_resep_persen,
-            'fm_hrg_jual_nakes_persen' => $request->fm_hrg_jual_nakes_persen,
-        ]);
+            DB::table('mstr_obat')->where('fm_kd_obat', $request->fm_kd_obat)->update([
+                // 'fm_kd_obat' => $request->efm_kd_obat,
+                'fm_nm_obat' => $request->fm_nm_obat,
+                'fm_kategori' => $request->fm_kategori,
+                'fm_supplier' => $request->fm_supplier,
+                'fm_golongan_obat' => $request->fm_golongan_obat,
+                'fm_satuan_pembelian' => $request->fm_satuan_pembelian,
+                'fm_isi_satuan_pembelian' => $request->fm_isi_satuan_pembelian,
+                'fm_hrg_beli' => $request->fm_hrg_beli,
+                'fm_hrg_beli_detail' => $request->fm_hrg_beli_detail,
+                'fm_satuan_jual' => $request->fm_satuan_jual,
+                'fm_hrg_jual_non_resep' => $request->fm_hrg_jual_non_resep,
+                'fm_hrg_jual_resep' => $request->fm_hrg_jual_resep,
+                'fm_hrg_jual_nakes' => $request->fm_hrg_jual_nakes,
+                'isActive' => $request->isActive,
+                'isOpenPrice' => $request->isOpenPrice,
+                'user' => Auth::user()->name,
+                'st_isi_pembelian'  => $request->st_isi_pembelian,
+                'st_hrg_beli_per1'  => $request->st_hrg_beli_per1,
+                'st_hrg_beli_per2'  => $request->st_hrg_beli_per2,
+                'fm_hrg_jual_non_resep_persen' => $request->fm_hrg_jual_non_resep_persen,
+                'fm_hrg_jual_resep_persen' => $request->fm_hrg_jual_resep_persen,
+                'fm_hrg_jual_nakes_persen' => $request->fm_hrg_jual_nakes_persen,
+            ]);
 
-        $dataSuccess = [
-            'success' => true,
-            'message' => 'Data Berhasil Diudapte!',
-        ];
+            DB::table('tb_stock')->where('kd_obat', $request->fm_kd_obat)->update([
+                'nm_obat' => $request->fm_nm_obat,
+                'satuan' => $request->fm_satuan_jual,
+            ]);
 
-        return response()->json($dataSuccess);
+            DB::commit();
+
+            $dataSuccess = [
+                'success' => true,
+                'message' => 'Data Berhasil Diudapte!',
+            ];
+
+            return response()->json($dataSuccess);
+        } catch (\Exception $e) {
+            DB::rollback();
+            toastr()->error('Gagal Tersimpan!');
+            return back();
+        }
     }
 
     public function obatDelete(Request $request)

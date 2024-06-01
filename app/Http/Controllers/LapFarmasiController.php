@@ -20,14 +20,14 @@ class LapFarmasiController extends Controller
     public function lapPenjualanFarmasiRekap()
     {
         $isUser = DB::table('users')->get();
-        return view('Pages.laporan.farmasi.laporan-penjualan-rekap', ['isUser' => $isUser]);
+        return view('pages.laporan.farmasi.laporan-penjualan-rekap', ['isUser' => $isUser]);
     }
 
     public function lapPenjualanFarmasiDetail()
     {
         $isUser = DB::table('users')->get();
 
-        return view('Pages.laporan.farmasi.laporan-penjualan-farmasi-detail', ['isUser' => $isUser]);
+        return view('pages.laporan.farmasi.laporan-penjualan-farmasi-detail', ['isUser' => $isUser]);
     }
 
 
@@ -50,7 +50,7 @@ class LapFarmasiController extends Controller
     {
         // $t = $request->all();
         // dd($t);
-        if ($request->user == '') {
+        if ($request->user == '' && $request->tipeTarif == '') {
             $isDataLaporanDetail = DB::table('tp_detail_item')
                 ->leftJoin('mstr_obat', 'tp_detail_item.kd_obat', 'mstr_obat.fm_kd_obat')
                 ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'fm_hrg_beli_detail', DB::raw('sum(qty) as total'))
@@ -58,7 +58,7 @@ class LapFarmasiController extends Controller
                 ->whereNull('kd_reg')
                 ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan')
                 ->get();
-        } else {
+        } else if ($request->user != '' && $request->tipeTarif == '') {
             $isDataLaporanDetail = DB::table('tp_detail_item')
                 ->leftJoin('mstr_obat', 'tp_detail_item.kd_obat', 'mstr_obat.fm_kd_obat')
                 ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'fm_hrg_beli_detail', DB::raw('sum(qty) as total'))
@@ -67,14 +67,32 @@ class LapFarmasiController extends Controller
                 ->where('tp_detail_item.user', $request->user)
                 ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan')
                 ->get();
+        } else if ($request->user == '' && $request->tipeTarif != '') {
+            $isDataLaporanDetail = DB::table('tp_detail_item')
+                ->leftJoin('mstr_obat', 'tp_detail_item.kd_obat', 'mstr_obat.fm_kd_obat')
+                ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'fm_hrg_beli_detail', DB::raw('sum(qty) as total'))
+                ->whereBetween('tgl_trs', [$request->date1, $request->date2])
+                ->whereNull('kd_reg')
+                ->where('tp_detail_item.tipeTarif', $request->tipeTarif)
+                ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan')
+                ->get();
+        } else if ($request->user != '' && $request->tipeTarif != '') {
+            $isDataLaporanDetail = DB::table('tp_detail_item')
+                ->leftJoin('mstr_obat', 'tp_detail_item.kd_obat', 'mstr_obat.fm_kd_obat')
+                ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'fm_hrg_beli_detail', DB::raw('sum(qty) as total'))
+                ->whereBetween('tgl_trs', [$request->date1, $request->date2])
+                ->whereNull('kd_reg')
+                ->where('tp_detail_item.user', $request->user)
+                ->where('tp_detail_item.tipeTarif', $request->tipeTarif)
+                ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan')
+                ->get();
         }
-
         return response()->json($isDataLaporanDetail);
     }
 
     public function bukuStok()
     {
-        return view('Pages.laporan.farmasi.buku-stok');
+        return view('pages.laporan.farmasi.buku-stok');
     }
 
     public function getBukuStok(Request $request)
@@ -82,10 +100,27 @@ class LapFarmasiController extends Controller
         // $t = $request->all();
         // dd($t);
         if ($request->ajax()) {
-            $isDataBukuStok = DB::table('tb_stock')
-                ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
-                ->select('mstr_obat.*', 'tb_stock.*')
-                ->get();
+            if ($request->kondisiStock == '') {
+                $isDataBukuStok = DB::table('tb_stock')
+                    ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
+                    ->where('mstr_obat.isActive', '=', '1')
+                    ->select('mstr_obat.*', 'tb_stock.*')
+                    ->get();
+            } else if ($request->kondisiStock == 'ada') {
+                $isDataBukuStok = DB::table('tb_stock')
+                    ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
+                    ->where('mstr_obat.isActive', '=', '1')
+                    ->where('tb_stock.qty', '!=', '0')
+                    ->select('mstr_obat.*', 'tb_stock.*')
+                    ->get();
+            } else if ($request->kondisiStock == 'kosong') {
+                $isDataBukuStok = DB::table('tb_stock')
+                    ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
+                    ->where('mstr_obat.isActive', '=', '1')
+                    ->where('tb_stock.qty', '=', '0')
+                    ->select('mstr_obat.*', 'tb_stock.*')
+                    ->get();
+            }
         }
         return response()->json($isDataBukuStok);
     }
@@ -95,7 +130,7 @@ class LapFarmasiController extends Controller
     {
         $isMstrMedis =  mstr_dokter::all();
 
-        return view('Pages.laporan.registrasi.laporan-registrasi-masuk', ['isMstrMedis' => $isMstrMedis]);
+        return view('pages.laporan.registrasi.laporan-registrasi-masuk', ['isMstrMedis' => $isMstrMedis]);
     }
 
     public function getLapRegMasuk(Request $request)
@@ -144,7 +179,7 @@ class LapFarmasiController extends Controller
     // LAPORAN PENDAPATAN KLINIK
     public function lapKlinikRekap()
     {
-        return view('Pages.laporan.klinik.pendapatan-klinik-rekap');
+        return view('pages.laporan.klinik.pendapatan-klinik-rekap');
     }
 
     public function getLapPendapatanKlinik(Request $request)
@@ -167,7 +202,7 @@ class LapFarmasiController extends Controller
 
     function pembelianDetail()
     {
-        return view('Pages.laporan.farmasi.pembelian-detail');
+        return view('pages.laporan.farmasi.pembelian-detail');
     }
 
     function getPembelianDetail(Request $request)
@@ -185,7 +220,7 @@ class LapFarmasiController extends Controller
     {
         $isMstrMedis =  mstr_dokter::all();
         $isMstrTdk =  mstr_tindakan::all();
-        return view('Pages.laporan.klinik.info-tindakan', [
+        return view('pages.laporan.klinik.info-tindakan', [
             'isMstrMedis' => $isMstrMedis,
             'isMstrTdk' => $isMstrTdk
         ]);
@@ -243,7 +278,7 @@ class LapFarmasiController extends Controller
 
     public function karatuStok()
     {
-        return view('Pages.laporan.farmasi.kartu-stok');
+        return view('pages.laporan.farmasi.kartu-stok');
     }
 
     public function itemObatSearch(Request $request)
